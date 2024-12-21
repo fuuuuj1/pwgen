@@ -28,3 +28,62 @@ pub fn generate_password(length: usize, char_pool: &str) -> String {
         })
         .collect::<String>()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_build_char_pool_default() {
+        assert_eq!(
+            build_char_pool(false, false, false),
+            "abcdefghijklmnopqrstuvwxyz"
+        );
+    }
+
+    #[test]
+    fn test_build_char_pool_with_uppercase() {
+        assert_eq!(
+            build_char_pool(true, false, false),
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        );
+    }
+
+    #[test]
+    fn test_build_char_pool_with_digits() {
+        assert_eq!(
+            build_char_pool(false, true, false),
+            "abcdefghijklmnopqrstuvwxyz0123456789"
+        );
+    }
+
+    #[test]
+    fn test_build_char_pool_with_symbols() {
+        assert_eq!(
+            build_char_pool(false, false, true),
+            "abcdefghijklmnopqrstuvwxyz!@#$%&&'()=~"
+        );
+    }
+
+    #[test]
+    fn test_build_char_pool_all_option() {
+        assert_eq!(
+            build_char_pool(true, true, true),
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&&'()=~"
+        );
+    }
+
+    #[test]
+    fn test_generate_password_length() {
+        let char_pool = build_char_pool(false, false, false);
+        let password = generate_password(16, &char_pool);
+        assert_eq!(password.len(), 16);
+    }
+
+    #[test]
+    fn test_generate_password_char_pool() {
+        let char_pool = build_char_pool(false, false, false);
+        let password = generate_password(16, &char_pool);
+        assert_eq!(password.chars().all(|c| char_pool.contains(c)), true);
+    }
+}
