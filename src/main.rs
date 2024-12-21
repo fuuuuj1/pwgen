@@ -9,7 +9,7 @@ struct Args {
 
     // 生成パスワードに数値を含めるか
     #[arg(short, long, default_value = "false")]
-    digit: bool,
+    digits: bool,
 
     // 大文字あり/なし
     #[arg(short, long, default_value = "false")]
@@ -26,24 +26,15 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
+
+    let char_pool = pwgen::build_char_pool(
+        args.uppercase, 
+        args.digits, 
+        args.symbols
+    );
     
     for _ in 0..args.count {
-        println!("指定されたパスワードの長さは {}", args.length);
-
-        // オプション受け取りテスト
-        // 大文字指定があったら
-        if args.uppercase {
-            println!("大文字あり");
-        }
-
-        // 記号指定があったら
-        if args.symbols {
-            println!("記号あり");
-        }
-
-        // 数値指定があったら
-        if args.digit {
-            println!("数値あり");
-        }
+        let password = pwgen::generate_password(args.length as usize, &char_pool);
+        println!("{}",password);
     }
 }
