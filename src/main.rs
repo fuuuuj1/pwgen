@@ -28,6 +28,22 @@ fn main() {
     let args = Args::parse();
     
     for _ in 0..args.count {
-        println!("Hello, {}!", args.length);
+        println!("指定されたパスワードの長さは {}", args.length);
+
+        // オプション受け取りテスト
+        // 大文字指定があったら
+        if args.uppercase {
+            println!("大文字あり");
+        }
+
+        // 記号指定があったら
+        if args.symbols {
+            println!("記号あり");
+        }
+
+        // 数値指定があったら
+        if args.digit {
+            println!("数値あり");
+        }
     }
 }
