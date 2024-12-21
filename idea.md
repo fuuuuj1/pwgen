@@ -79,3 +79,5 @@ $ pwgen -l 20 -u -d -s -n 3
 1) "A3@nXLzqmh6&(p1sCYPb"
 2) "SD9j#GL7kn!YV0&riHlx"
 3) "t6nB^53bOXdz(!E2YQRr"
+
+```
